@@ -35,11 +35,11 @@ public class UserService {
 
     @Autowired
     public UserService(
-            UserRepository userRepository,
-            UserMapper userMapper,
-            UserCacheService userCacheService,
-            UserEventPublisher userEventPublisher,
-            MeterRegistry meterRegistry
+        UserRepository userRepository,
+        UserMapper userMapper,
+        UserCacheService userCacheService,
+        UserEventPublisher userEventPublisher,
+        MeterRegistry meterRegistry
     ) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
@@ -65,7 +65,7 @@ public class UserService {
         LOGGER.info("User cache miss");
         // cache miss - пользователя в кэше не оказалось
         UserDTO userFromDB = userRepository.findById(id).map(userMapper::toDTO)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // актуализирует кэш значением из БД
         userCacheService.saveToCache(userFromDB);
@@ -87,7 +87,7 @@ public class UserService {
 
     public UserDTO updateUser(UUID id, UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (userUpdateDTO.name().isPresent()) {
             user.setName(userUpdateDTO.name().get());
